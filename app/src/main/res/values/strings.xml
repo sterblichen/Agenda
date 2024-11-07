@@ -1,0 +1,38 @@
+<resources>
+    <string name="app_name">Agenda</string>
+
+    <string name="Btn_login">login</string>
+    <string name="Btn_Registro">Registro</string>
+
+    <string name="CrearCuenta">Crear una cuenta</string>
+    <string name="NombreUs">Nombres</string>
+    <string name="CorreoUs">Correo Electronico</string>
+    <string name="ContraseñaUs">Contraseña</string>
+    <string name="ConfirmarContraseñaUS">Confirmar Contraseña</string>
+    <string name="RegistrarUs">Registrar</string>
+    <string name="TengoUnaCuenta">Tengo una cuenta</string>
+
+    <string name="IniciarSesion">Iniciar Sesion</string>
+    <string name="CorreoLogin">Correo</string>
+    <string name="Password">Contraseña</string>
+    <string name="Btn_iniciar">Ingresar</string>
+    <string name="UsuarioNuevo">¿No estas registrado? Registrate AQUI</string>
+
+    <string name="BienvenidoUs">Bienvenido(a)</string>
+    <string name="NombreMenu">-----</string>
+    <string name="CorreoMEnu">-----</string>
+
+    <string name="NombreUsuarioNota">---</string>
+    <string name="CorreoUsuarioNota">---</string>
+    <string name="Fecha_hora">----</string>
+    <string name="Titulo">Titulo</string>
+    <string name="DescripcionNota"></string>
+    <string name="Btn_calendario">Calendario</string>
+    <string name="Fecha">00/00/0000</string>
+    <string name="Estado">No finalizado</string>
+
+    <string name="TituloNota">Crear Nota</string>
+    <string name="AgregarNota">Agregar Nota</string>
+    <string name="VerNotas">Ver notas</string>
+
+</resources>
