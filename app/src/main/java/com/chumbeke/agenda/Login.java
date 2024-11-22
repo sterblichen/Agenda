@@ -53,6 +53,9 @@ public class Login extends AppCompatActivity {
          binding.UsuarioNuevo.setOnClickListener(view -> {
              startActivity(new Intent(Login.this,Registro.class));
          });
+        binding.Atras.setOnClickListener(view -> {
+            finish();
+        });
     }
 
     private void MostrarProgress() {

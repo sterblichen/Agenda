@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Agenda</string>
 
-    <string name="Btn_login">login</string>
+    <string name="Btn_login">Login</string>
     <string name="Btn_Registro">Registro</string>
 
     <string name="CrearCuenta">Crear una cuenta</string>
@@ -33,6 +33,9 @@
 
     <string name="TituloNota">Crear Nota</string>
     <string name="AgregarNota">Agregar Nota</string>
+    <string name="ActualizarNota">Actualizar Nota</string>
+    <string name="EliminarNota">Eliminar la nota</string>
     <string name="VerNotas">Ver notas</string>
+    <string name="CerrarSesion">Cerrar Sesion</string>
 
 </resources>

@@ -3,10 +3,8 @@ package com.chumbeke.agenda;
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.content.Intent;
-import android.os.Binder;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.widget.DatePicker;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -18,38 +16,48 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.chumbeke.agenda.ObjetosUsuariosYNotas.Notas;
 import com.chumbeke.agenda.databinding.ActivityAgregarNotaBinding;
+import com.chumbeke.agenda.databinding.ActivityEditorDeNotasBinding;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
-public class AgregarNota extends AppCompatActivity {
-    private ActivityAgregarNotaBinding binding;
+public class EditorDeNotas extends AppCompatActivity {
+    private ActivityEditorDeNotasBinding binding;
     int dia,mes,year;
     ArrayList<String> Datos = new ArrayList<>();
+    ArrayList<Notas> ListaNotas = new ArrayList<>();
     AlertDialog progressDialog;
     ManejoDB database;
+
+    String id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivityAgregarNotaBinding.inflate(getLayoutInflater());
+        binding = ActivityEditorDeNotasBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        Datos = getIntent().getStringArrayListExtra("US");
+        Datos = getIntent().getStringArrayListExtra("DatosParaEditar");
+        String fecha = getIntent().getStringExtra("Fecha");
+        String titulo = getIntent().getStringExtra("Titulo");
+        String descripcion = getIntent().getStringExtra("Descripcion");
         database = new ManejoDB(this);
+        id = database.BuscarNotaParaEdit(fecha,titulo,descripcion,Datos.get(0));
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setView(R.layout.dialog_progress);
         builder.setCancelable(false);
         progressDialog = builder.create();
 
-        Date date = new Date();
 
+
+
+        binding.Titulo.setText(titulo);
+        binding.Descripcion.setText(descripcion);
         binding.NombreUsuaruiNota.setText(Datos.get(0));
         binding.CorreoUsuarioNota.setText(Datos.get(2));
-        binding.FechaHora.setText(date.toString());
+        binding.FechaHora.setText(fecha);
 
         binding.BtnCalendario.setOnClickListener(view -> {
             final Calendar calendario = Calendar.getInstance();
@@ -58,7 +66,7 @@ public class AgregarNota extends AppCompatActivity {
             year = calendario.get(Calendar.YEAR);
 
             DatePickerDialog datePickerDialog = new DatePickerDialog(
-                    AgregarNota.this,
+                    EditorDeNotas.this,
                     (datePicker, yearSeleccionado, mesSeleccionado, diaSeleccionado) -> {
                         String DiaForma = String.format("%02d", diaSeleccionado);
                         String MesForma = String.format("%02d", mesSeleccionado + 1);
@@ -70,16 +78,17 @@ public class AgregarNota extends AppCompatActivity {
             datePickerDialog.show();
         });
 
-        binding.AgregarNota.setOnClickListener(view -> {
-            Boolean vali = ValidarDatos();
-            if (vali == true){
-                MostrarProgress();
-                AgregarNota();
-            }
+        binding.ActualizarNota.setOnClickListener(view -> {
+
+            MostrarProgress();
+            AgregarNota();
+
         });
-        binding.Atras.setOnClickListener(view -> {
-            finish();
+        binding.EliminarNota.setOnClickListener(view -> {
+            MostrarProgress();
+            EliminarNota();
         });
+
     }
     private void MostrarProgress() {
         if (progressDialog != null && !progressDialog.isShowing()) {
@@ -92,34 +101,57 @@ public class AgregarNota extends AppCompatActivity {
         }
 
     }
-    public Boolean ValidarDatos(){
-        if(TextUtils.isEmpty(binding.Titulo.getText().toString())){
-            Toast.makeText(this, "Coloque un titulo", Toast.LENGTH_SHORT).show();
-        } else if (TextUtils.isEmpty(binding.Descripcion.getText().toString())) {
-            Toast.makeText(this, "Escriba una descripcion", Toast.LENGTH_SHORT).show();
-        } else if (TextUtils.isEmpty(binding.Fecha.getText().toString())) {
-        } else if (TextUtils.isEmpty(binding.Fecha.getText().toString())) {
-            Toast.makeText(this, "Coloque una fecha", Toast.LENGTH_SHORT).show();
-        }else {
-            return true;
-        }
-        return false;
-    }
+
     @SuppressLint("NotConstructor")
     public void AgregarNota(){
         new Thread(() -> {
             try {
                 Thread.sleep(2000);
+
+
                 Notas notas = new Notas(Datos.get(2),Datos.get(0),binding.Titulo.getText().toString(),
                         binding.Descripcion.getText().toString(),binding.Fecha.getText().toString());
-                database.RegistrarNotaDB(notas);
+                database.EditarNOtas(id,notas.getTitulo(),notas.getDescripcion(),notas.getFecha());
                 runOnUiThread(() -> {
                     EsconderProgress();
                     Toast.makeText(this, "Nota agregada con exito", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(AgregarNota.this,MenuPrincipal.class);
-                    intent.putStringArrayListExtra("DatosAgregarNota",Datos);
+                    Intent intent = new Intent(EditorDeNotas.this,MenuPrincipal.class);
+                    intent.putStringArrayListExtra("EditorNotas",Datos);
                     startActivity(intent);
                 });
+            }catch (InterruptedException e){
+                runOnUiThread(() -> {
+                    EsconderProgress();
+                    Toast.makeText(this, "No se pudo agregar la nota", Toast.LENGTH_SHORT).show();
+                });
+            }
+        }).start();
+    }
+    public void EliminarNota(){
+        new Thread(() -> {
+            try {
+                Thread.sleep(2000);
+
+                boolean ElimExitosa = database.EliminarNota(id);
+                if (ElimExitosa == true){
+                    runOnUiThread(() -> {
+                        EsconderProgress();
+                        Toast.makeText(this, "Se elimino con exito la nota", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(EditorDeNotas.this,MenuPrincipal.class);
+                        intent.putStringArrayListExtra("EditorNotas",Datos);
+                        startActivity(intent);
+                    });
+                }else {
+                    runOnUiThread(() -> {
+                        EsconderProgress();
+                        Toast.makeText(this, "No se pudo eliminar la nota", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(EditorDeNotas.this,MenuPrincipal.class);
+                        intent.putStringArrayListExtra("EditorNotas",Datos);
+                        startActivity(intent);
+                    });
+                }
+
+
             }catch (InterruptedException e){
                 runOnUiThread(() -> {
                     EsconderProgress();

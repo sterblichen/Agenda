@@ -42,12 +42,6 @@ public class Registro extends AppCompatActivity {
         database = new ManejoDB(this);
 
 
-        ActionBar actionBar = getSupportActionBar();
-        if(actionBar != null) {
-            actionBar.setTitle("Registrar");
-            actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setDisplayShowHomeEnabled(true);
-        }
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setView(R.layout.dialog_progress);
@@ -61,6 +55,13 @@ public class Registro extends AppCompatActivity {
             }else {
                 Toast.makeText(this,"Ingrese nuevamente los Datos",Toast.LENGTH_SHORT).show();
             }
+        });
+
+        binding.TengoUnaCuenta.setOnClickListener(view -> {
+            startActivity(new Intent(Registro.this, Login.class));
+        });
+        binding.Atras.setOnClickListener(view -> {
+            finish();
         });
 
     }
@@ -108,7 +109,7 @@ public class Registro extends AppCompatActivity {
                runOnUiThread(() -> {
                    EsconderProgress();
                    Toast.makeText(this, "Registro completado", Toast.LENGTH_SHORT).show();
-                   startActivity(new Intent(Registro.this,MenuPrincipal.class));
+                   startActivity(new Intent(Registro.this,Login.class));
 
                });
 

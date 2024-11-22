@@ -1,26 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AgregarNota">
+    tools:context=".EditorDeNotas">
 
-    
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="10dp">
-        <Button
-            android:id="@+id/Atras"
-            android:text="Atras"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="18sp"
-            android:layout_marginBottom="15dp"/>
-        
+
+
         <TextView
             android:id="@+id/NombreUsuaruiNota"
             android:layout_width= "match_parent"
@@ -64,6 +58,7 @@
             android:minHeight="150dp"
             android:gravity="start"/>
 
+
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -88,13 +83,28 @@
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
-        <Button
-            android:id="@+id/AgregarNota"
-            android:layout_width="match_parent"
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
-            android:text="@string/AgregarNota"
-            app:icon="@drawable/icono_agregarnota"/>
+            android:orientation="horizontal"
+            android:layout_gravity="center">
+
+            <Button
+                android:id="@+id/ActualizarNota"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="50dp"
+                android:text="@string/ActualizarNota"
+                app:icon="@drawable/icono_agregarnota"/>
+            <Button
+                android:id="@+id/EliminarNota"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="50dp"
+                android:text="@string/EliminarNota"
+                app:icon="@drawable/icono_agregarnota"/>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
 
 
 
@@ -102,3 +112,4 @@
     </androidx.appcompat.widget.LinearLayoutCompat>
 
 </ScrollView>
+

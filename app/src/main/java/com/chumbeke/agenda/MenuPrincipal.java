@@ -19,6 +19,7 @@ import java.util.ArrayList;
 public class MenuPrincipal extends AppCompatActivity {
     private ActivityMenuPrincipalBinding binding;
     ArrayList<String> Datos = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,6 +28,9 @@ public class MenuPrincipal extends AppCompatActivity {
         Datos = getIntent().getStringArrayListExtra("Datos");
         if (Datos == null){
             Datos = getIntent().getStringArrayListExtra("DatosAgregarNota");
+            if (Datos == null){
+                Datos = getIntent().getStringArrayListExtra("EditorNotas");
+            }
         }
         CambioDeDatos();
 
@@ -37,7 +41,14 @@ public class MenuPrincipal extends AppCompatActivity {
 
         });
         binding.verNotas.setOnClickListener(view -> {
-            startActivity(new Intent(MenuPrincipal.this,ListaDeNotas.class));
+            Intent intent = new Intent(MenuPrincipal.this, ListaDeNotas.class);
+            intent.putStringArrayListExtra("US",Datos);
+            startActivity(intent);
+
+        });
+        binding.CerrarSesion.setOnClickListener(view -> {
+            Intent intent = new Intent(MenuPrincipal.this, MainActivity.class);
+            startActivity(intent);
         });
 
 

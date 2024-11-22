@@ -6,12 +6,24 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Login">
+    <Button
+        android:id="@+id/Atras"
+        android:text="Atras"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:layout_marginBottom="15dp"
+        android:layout_gravity="start"
+        android:layout_margin="10dp"/>
+
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
         android:padding="10dp"
         android:orientation="vertical">
+
+
 
         <TextView
             android:layout_width="match_parent"
