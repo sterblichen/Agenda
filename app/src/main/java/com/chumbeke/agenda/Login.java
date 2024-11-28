@@ -47,15 +47,15 @@ public class Login extends AppCompatActivity {
             Boolean vali = Validarlogin();
             if (vali){
 
-                LogeandoUsuario(binding.CorreoLogin.getText().toString(),binding.Password.getText().toString());
+                LogeandoUsuario();
             }
          });
          binding.UsuarioNuevo.setOnClickListener(view -> {
              startActivity(new Intent(Login.this,Registro.class));
          });
-        binding.Atras.setOnClickListener(view -> {
+         binding.Atras.setOnClickListener(view -> {
             finish();
-        });
+         });
     }
 
     private void MostrarProgress() {
@@ -76,6 +76,7 @@ public class Login extends AppCompatActivity {
         } else if (TextUtils.isEmpty(binding.Password.getText().toString().trim())) {
             Toast.makeText(this, "Ingrese la contraseña", Toast.LENGTH_SHORT).show();
         }else{
+            Datos.clear();
             MostrarProgress();
             Datos.add(binding.CorreoLogin.getText().toString());
             Datos.add(binding.Password.getText().toString());
@@ -85,7 +86,7 @@ public class Login extends AppCompatActivity {
         return false;
     }
 
-    private void LogeandoUsuario(String correo,String psw){
+    private void LogeandoUsuario(){
         new Thread(() -> {
             try {
                 Thread.sleep(3000);
